@@ -6,32 +6,31 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control. ComboBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
-public class MainClass extends Application implements EventHandler<ActionEvent> {
+
+public class SecondComponent extends Application implements EventHandler<ActionEvent>{
 	Button button;
-	ComboBox<String> comboBox;
+	Button button2;
 	TextField  textInput;
 	public static void main (String[] args) {
 		launch(args);
 	}
 	public void start(Stage primaryStage)  {
 		primaryStage.setTitle("First elements");
-		button = new Button("Click here");
-		comboBox = new ComboBox<>();
+		button = new Button("Button 1");
+		button2 = new Button ("Button 2");
 		StackPane layout = new StackPane();
 		button.setOnAction(this);
+		button2.setOnAction(this);
 		textInput = new TextField();
 		textInput.setPromptText("Enter something ");
-		comboBox.setEditable(true);
-		comboBox.setPromptText(textInput.getText());
-		layout.setMargin(comboBox, new Insets (10,10,50,10));
-		layout.setAlignment(comboBox, Pos.BOTTOM_CENTER);
 		layout.setMargin(textInput, new Insets(50,10,10,10));
 		layout.setAlignment(textInput, Pos.TOP_CENTER);
-		layout.getChildren().addAll(button, comboBox, textInput);
+		layout.setMargin(button2, new Insets(10,10,50,10));
+		layout.setAlignment(button2, Pos.BOTTOM_CENTER);
+		layout.getChildren().addAll(button, button2, textInput);
 		Scene scene = new Scene(layout, 300, 300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -39,7 +38,13 @@ public class MainClass extends Application implements EventHandler<ActionEvent> 
 	}
 	public void handle(ActionEvent event) {
 		if (event.getSource() == button) {
-			comboBox.getItems().add(textInput.getText());
+			button2.setText(textInput.getText());
 	}
+		if (event.getSource() == button2) {
+			String textfrombutton1 = button.getText();
+			String textfrombutton2 = button2.getText();
+			button.setText(textfrombutton2);
+			button2.setText(textfrombutton1);
+		}
 	}
 }
