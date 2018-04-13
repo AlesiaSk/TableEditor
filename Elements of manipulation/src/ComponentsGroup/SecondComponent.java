@@ -14,6 +14,7 @@ public class SecondComponent extends Application implements EventHandler<ActionE
 	Button button;
 	Button button2;
 	TextField  textInput;
+	StackPane layout;
 	public static void main (String[] args) {
 		launch(args);
 	}
@@ -21,7 +22,7 @@ public class SecondComponent extends Application implements EventHandler<ActionE
 		primaryStage.setTitle("First elements");
 		button = new Button("Button 1");
 		button2 = new Button ("Button 2");
-		StackPane layout = new StackPane();
+		layout = new StackPane();
 		button.setOnAction(this);
 		button2.setOnAction(this);
 		textInput = new TextField();
