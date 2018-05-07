@@ -23,13 +23,23 @@ public class FourthComponent extends Application implements EventHandler<ActionE
 		CheckBox checkBox2;
 		CheckBox checkBox3;
 		Alert alert;
+		StackPane layout;
 		public static void main (String[] args) {
 			launch(args);
+		}
+		public void FourthComponent(Button button, TextField textField, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, StackPane stackPane, Alert alert) {
+			this.alert = alert;
+			this.button = button;
+			this.checkBox1 = checkBox1;
+			this.checkBox2 = checkBox2;
+			this.checkBox3 = checkBox3;
+			this.textInput = textField;
+			this.layout = stackPane;
 		}
 		public void start(Stage primaryStage)  {
 			primaryStage.setTitle("First elements");
 			button = new Button("Button 1");
-			StackPane layout = new StackPane();
+			layout = new StackPane();
 			checkBox1 = new CheckBox("CheckBox1");
 			checkBox2 = new CheckBox("CheckBox2");
 			checkBox3 = new CheckBox("CheckBox3");

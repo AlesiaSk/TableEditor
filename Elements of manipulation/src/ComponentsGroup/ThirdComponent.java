@@ -22,13 +22,24 @@ public class ThirdComponent extends Application implements EventHandler<ActionEv
 	RadioButton radioButton2;
 	RadioButton radioButton3;
 	Alert alert;
+	StackPane layout;
 	public static void main (String[] args) {
 		launch(args);
+	}
+	public void ThirdComponent(Button button, TextField textField, RadioButton radiobutton1, RadioButton radiobutton2, RadioButton radiobutton3, StackPane stackPane, Alert alert) {
+		this.button = button;
+		this.alert = alert;
+		this.layout = stackPane;
+		this.radioButton1 = radiobutton1;
+		this.radioButton2 = radiobutton2;
+		this.radioButton3 = radiobutton3;
+		this.textInput = textField;
+		
 	}
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("First elements");
 		button = new Button("Button 1");
-		StackPane layout = new StackPane();
+		layout = new StackPane();
 		alert = new Alert(AlertType.ERROR);
 		final ToggleGroup group = new ToggleGroup();
 		radioButton1 = new RadioButton("RadioButton1");

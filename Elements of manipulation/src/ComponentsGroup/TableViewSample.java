@@ -27,19 +27,32 @@ import javafx.util.Callback;
  
 public class TableViewSample extends Application implements EventHandler<ActionEvent>{
  
-    private final TableView<Person> table = new TableView<>();
-    private final ObservableList<Person> data =
+     TableView<Person> table = new TableView<>();
+     ObservableList<Person> data =
             FXCollections.observableArrayList();
-    final HBox hb = new HBox();
-    final Button addButton2 = new Button("Button2");
-    final Button addButton = new Button("Button1");
-    final Button addButton3 = new Button("Button3");
-    TableColumn firstNameCol = new TableColumn("The First");
-    final TextField addFirstName = new TextField();
+     HBox hb = new HBox();
+     Button addButton2 = new Button("Button2");
+     Button addButton = new Button("Button1");
+     Button addButton3 = new Button("Button3");
+     TableColumn lastNameCol;
+     VBox vbox;
+     TableColumn firstNameCol = new TableColumn("The First");
+     TextField addFirstName = new TextField();
     public static void main(String[] args) {
         launch(args);
     }
- 
+    public void TableViewSample(VBox vbox, ObservableList<Person> data, TableView<Person> table, HBox hb, Button button1, Button button2, Button button3, TextField textField, TableColumn firstNameCol, TableColumn lastNameCol) {
+    	this.addButton = button1;
+    	this.addButton2 = button2;
+    	this.addButton3 = button3;
+    	this.addFirstName = textField;
+    	this.hb = hb;
+    	this.firstNameCol = firstNameCol;
+    	this.lastNameCol = lastNameCol;
+    	this.table = table;
+    	this.data = data;
+    	this.vbox = vbox;
+    }
     @Override
     public void start(Stage stage)  {
         Scene scene = new Scene(new Group());
@@ -56,7 +69,7 @@ public class TableViewSample extends Application implements EventHandler<ActionE
                 new PropertyValueFactory<>("firstName"));
        
  
-        TableColumn lastNameCol = new TableColumn("The Second");
+        lastNameCol = new TableColumn("The Second");
         lastNameCol.setMinWidth(150);
         lastNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("lastName"));
@@ -75,7 +88,7 @@ public class TableViewSample extends Application implements EventHandler<ActionE
         hb.getChildren().addAll(addFirstName,addButton, addButton2, addButton3);
         hb.setSpacing(3);
  
-        final VBox vbox = new VBox();
+        vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(label, table, hb);

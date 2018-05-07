@@ -12,16 +12,22 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-public class MainClass extends Application implements EventHandler<ActionEvent> {
+public class MainClass extends Application implements EventHandler<ActionEvent>  {
 
 	Button button;
 	ComboBox<String> comboBox;
 	TextField  textInput;
 	StackPane layout;
+	
 	public static void main (String[] args) {
 		launch(args);
 	}
-	
+	public void MainClass(Button button, TextField textField, StackPane stackPane, ComboBox<String> comboBox) {
+		this.button = button;
+		this.layout = stackPane;
+		this.textInput = textField;
+		this.comboBox = comboBox;
+	}
 	public void start(Stage primaryStage)  {
 		primaryStage.setTitle("First elements");
 		button = new Button("Click here");

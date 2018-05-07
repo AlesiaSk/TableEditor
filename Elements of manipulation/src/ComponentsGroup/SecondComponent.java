@@ -18,6 +18,12 @@ public class SecondComponent extends Application implements EventHandler<ActionE
 	public static void main (String[] args) {
 		launch(args);
 	}
+	public void SecondComponent(Button button1, Button button2, TextField textField, StackPane stackPane) {
+		this.button = button1;
+		this.button2 = button2;
+		this.textInput = textField;
+		this.layout = stackPane;
+	}
 	public void start(Stage primaryStage)  {
 		primaryStage.setTitle("First elements");
 		button = new Button("Button 1");

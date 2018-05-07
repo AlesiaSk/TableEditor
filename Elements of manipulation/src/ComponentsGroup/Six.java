@@ -32,40 +32,62 @@ public class Six extends Application implements EventHandler<ActionEvent>{
 	TextField  textInput;
 	TextField textInput2;
 	StackPane layout;
+	TableView<MyDataType> table;
+	Button button2;
+	Button button3;
+	Timer mTimer;
+	MTimerTask task;
+	
 	private final ObservableList<MyDataType> data =
             FXCollections.observableArrayList();
 	public static void main (String[] args) {
 		launch(args);
 	}
+	public void Six(Button button, TextField textField1, TextField textField2, StackPane stackPane, TableView<MyDataType> table, Button button2, Button button3, Timer mTimer, MTimerTask task) {
+		this.button = button;
+		this.button2 = button2;
+		this.button3 = button3;
+		this.layout = stackPane;
+		this.mTimer = mTimer;
+		this.task = task;
+		this.table = table;
+		this.textInput = textField1;
+		this.textInput2 = textField2;
+	}
 	public void start(Stage primaryStage)  {
-		primaryStage.setTitle("First elements");
+		primaryStage.setTitle("Sixth component");
 		button = new Button("Click");
+		mTimer = new Timer();
 		textInput = new TextField();
 		textInput.setPromptText("Input number of columns");
 		textInput2 = new TextField();
 		textInput2.setPromptText("Input number of rows");
 		button.setOnAction(this);
 		layout = new StackPane();
-		layout.getChildren().addAll(button, textInput, textInput2);
 		layout.setMargin(textInput, new Insets(50,10,10,10));
 		layout.setAlignment(textInput, Pos.CENTER);
 		layout.setMargin(textInput2, new Insets(10,10,50,10));
 		layout.setAlignment(textInput2, Pos.CENTER);
 		layout.setMargin(button, new Insets(10,10,50,10));
 		layout.setAlignment(button, Pos.BOTTOM_CENTER);
+		table = new TableView<>();
+		table.setMinSize(150, 150);
+		button2 = new Button("Start");
+		button3 = new Button("Stop");
+		button2.setOnAction(this);
+		button3.setOnAction(this);
+		layout.getChildren().addAll(button, textInput, textInput2);
 		Scene scene = new Scene(layout, 300, 300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 	public void handle(ActionEvent event) {
 		if (event.getSource() == button) {
-			TableView<MyDataType> table = new TableView<>();
-			table.setMinSize(150, 150);
-			Random random = new Random();
-			Timer mTimer = new Timer();
 			String strNumbOfColumns = textInput.getText();
 			String strNumbOfRows= textInput2.getText();
-			layout.getChildren().add(table);
+			layout.setMargin(button3, new Insets(10,10,50,10));
+			layout.setAlignment(button3, Pos.BOTTOM_CENTER);
+			layout.getChildren().addAll(table, button2, button3);
 			List<String> intValues = new ArrayList();
 			 for (int i = 0; i < Integer.parseInt(strNumbOfColumns); i++) {
 				 TableColumn<MyDataType, String> firstNameCol = new TableColumn<>(Integer.toString(i+1));
@@ -82,25 +104,20 @@ public class Six extends Application implements EventHandler<ActionEvent>{
 		    	 data.add(new MyDataType(intValues.get(k)));
 		    	 
 		     }
-		     while(true) {
-			     for ( int i = 0; i<table.getItems().size(); i++) {
-			    	
-			     if (i == table.getItems().size()) {
-			    	 MyDataType selectedRecord = (MyDataType)table.getItems().get(i);
-					 MyDataType selectedRecord3 = (MyDataType)table.getItems().get(0);
-					 table.getItems().set(i, selectedRecord3);
-					 table.getItems().set(0, selectedRecord); 
-			     }
-			     else {
-			    	MyDataType selectedRecord1 = (MyDataType)table.getItems().get(i);
-				    MyDataType selectedRecord2 = (MyDataType)table.getItems().get(i+1);
-				    table.getItems().set(i, selectedRecord2);
-				    table.getItems().set(i+1, selectedRecord1); 
-			     }
-			    	
-		     }
-		 
+		     
 	}
+		if (event.getSource() == button2) {
+			task = new MTimerTask(table.getItems().size());
+			mTimer.schedule(task, 100, 1000);
+			
+		}
+		if (event.getSource() == button3) {
+			task.cancel();
+			mTimer.cancel();
+			mTimer.purge();
+			mTimer = null;
+		}
+		
 	}
 	public class MyDataType {
 		private final SimpleStringProperty intValue ;
@@ -116,5 +133,31 @@ public class Six extends Application implements EventHandler<ActionEvent>{
         }
 	    
 	}
+	class MTimerTask extends TimerTask {
+
+	    
+	    private int size;
+
+
+	    MTimerTask ( int size)
+	    {
+	      this.size = size;
+	    }
+
+	    public void run() {
+	    	MyDataType firstRow =  (MyDataType)table.getItems().get(0);
+	    	for (int i = 0; i <= (size -1); i++) {
+	    		if (i == (size - 1)) {
+	    			table.getItems().set(i, firstRow);
+	    		}
+	    		else {
+	    			table.getItems().set(i, (MyDataType)table.getItems().get(i+1));
+	    			}
+	    }
+	    	
+	}
+	
+	
 }
 
+}
