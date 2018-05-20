@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,14 +36,15 @@ import javafx.scene.control.MenuBar;
 
 public class MainClass extends Application implements EventHandler<ActionEvent>{
 	 
-    TableView<Person> table = new TableView<>();
-    ObservableList<Person> data =
+    TableView<TableInfo> table = new TableView<>();
+    ObservableList<TableInfo> data =
            FXCollections.observableArrayList();
     HBox hb = new HBox();
     ArrayList<String[]> list;
     Button addButton2 = new Button("Найти");
     Button addButton = new Button("Добавить");
     Button addButton3 = new Button("Удалить");
+    Button addButton4 = new Button("Загрузить");
     VBox vbox;
     MenuBar menuBar;
     Label label1;
@@ -46,6 +53,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
     Label label4;
     Label label5;
     TextField addStudent = new TextField();
+    private static final String FILENAME = "File.xml";
     TableColumn studentFIO = new TableColumn("ФИО студента");
    public static void main(String[] args) {
        launch(args);
@@ -86,7 +94,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        TableColumn parentWork = new TableColumn("Должность родителя");
        parentWork.setMinWidth(150);
        parentWork.setCellValueFactory(
-               new PropertyValueFactory<>("forth"));
+               new PropertyValueFactory<>("fourth"));
        
        TableColumn workExperience = new TableColumn("Стаж работы родителя");
        workExperience.setMinWidth(150);
@@ -102,7 +110,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        addButton.setOnAction(this);
        addButton2.setOnAction(this);
        addButton3.setOnAction(this);
-       hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, menuBar);
+       hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, addButton4, menuBar);
        hb.setSpacing(3);
 
        vbox = new VBox();
@@ -117,10 +125,15 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
    }
    public void handle(ActionEvent event) {
    	if (event.getSource() == addButton) {
+   		
    		String s =  addStudent.getText();
    		String[] parts = s.split(" ");
    		list.add(parts);
-   		data.add(new Person(parts[0], parts[1], parts[2], parts[3], parts[4]));
+   		Person A = new Person(parts[0], parts[1]);
+   		Address adr = new Address(parts[2]);
+   		Job job = new Job(parts[3]);
+   		WorkExperience exp = new WorkExperience(Integer.parseInt(parts[4]));
+   		data.add(new TableInfo(A.first, A.second, adr.third , job.fourth, exp.fifth));
    		addStudent.clear();
    	}
    	if (event.getSource() == addButton2) {
@@ -128,7 +141,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
 	   			String[] word = list.get(i);
 	   			for (int k = 0; k < word.length; k++) {
 		   			if (word[k].equals(addStudent.getText())) {
-		   				label1.setText(table.getItems().get(i).getFirst() + " " + table.getItems().get(i).getSecond() + " " + table.getItems().get(i).getThird() + " " + table.getItems().get(i).getForth() + " " + table.getItems().get(i).getFifth());
+		   				label1.setText(table.getItems().get(i).getFirst() + " " + table.getItems().get(i).getSecond() + " " + table.getItems().get(i).getThird() + " " + table.getItems().get(i).getFourth() + " " + table.getItems().get(i).getFifth());
 		   				Alert alert = new Alert(AlertType.INFORMATION);
 		   				alert.setTitle("Информация");
 		   				alert.setHeaderText("Было найдено");
@@ -141,66 +154,112 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
    		
    		addStudent.clear();
    	}
+	if (event.getSource() == addButton4) {
+   		
+	}
    
 		
    }
+   public  class TableInfo {
+	
+	private final SimpleStringProperty first;
+	private final SimpleStringProperty second;
+	private final SimpleStringProperty third;
+	private final SimpleStringProperty fourth;
+	private final SimpleIntegerProperty fifth;
+	
+	 private TableInfo(String fName, String sName, String tName, String foName, Integer fifName) {
+         this.first = new SimpleStringProperty(fName);
+         this.second = new SimpleStringProperty(sName);
+         this.third = new SimpleStringProperty(tName);
+         this.fourth = new SimpleStringProperty(foName);
+         this.fifth = new SimpleIntegerProperty(fifName);
+         
+     }
+
+     public String getFirst() {
+         return first.get();
+     }
+
+     public void setFirst(String fName) {
+         first.set(fName);
+     }
+     
+     public String getSecond() {
+         return second.get();
+     }
+
+     public void setSecond(String fName) {
+         second.set(fName);
+     }
+     
+     public String getThird() {
+         return third.get();
+     }
+
+     public void setThird(String tName) {
+         third.set(tName);
+     }
+     
+     public String getFourth() {
+         return fourth.get();
+     }
+
+     public void setFourth(String foName) {
+         fourth.set(foName);
+     }
+     
+     public Integer getFifth() {
+         return fifth.get();
+     }
+
+     public void setFifth(Integer fifName) {
+         fifth.set(fifName);
+     }
+	   
+   }
+	   
    public static class Person {
 
-       private final SimpleStringProperty first;
-       private final SimpleStringProperty second;
-       private final SimpleStringProperty third;
-       private final SimpleStringProperty forth;
-       private final SimpleStringProperty fifth;
+       public String first;
+       public String second;
        
-       private Person(String fName, String lName,  String tName, String foName, String fifName) {
-           this.first = new SimpleStringProperty(fName);
-           this.second = new SimpleStringProperty(lName);
-           this.third = new SimpleStringProperty(tName);
-           this.forth = new SimpleStringProperty(foName);
-           this.fifth= new SimpleStringProperty(fifName);
-       }
-
-       public String getFirst() {
-           return first.get();
-       }
-
-       public void setFirst(String fName) {
-           first.set(fName);
-       }
-
-       public String getSecond() {
-           return second.get();
-       }
-
-       public void setSecond(String lName) {
-           second.set(lName);
+       private Person(String fName, String sName) {
+           this.first = new String(fName);
+           this.second = new String(sName);
+           
        }
        
-       public String getThird() {
-           return third.get();
+      
        }
+   public class Address {
+		public String third;
+		
+		 private Address(String tName) {
+	           this.third = new String(tName);
+	           
+	       }
+		
+	}
+   public class Job {
+		public  String fourth;
+		private Job(String foName) {
+	           this.fourth = new String(foName);
+	           
+	       }
+		
+	}
+   public class WorkExperience {
 
-       public void setThird(String tName) {
-           third.set(tName);
-       }
-
-       public String getForth() {
-           return forth.get();
-       }
-
-       public void setForth(String foName) {
-           forth.set(foName);
-       }
-       
-       public String getFifth() {
-           return fifth.get();
-       }
-
-       public void setFifth(String fifName) {
-           fifth.set(fifName);
-       }
+		public Integer fifth;
+		private WorkExperience(Integer fifName) {
+	           this.fifth = new Integer(fifName);
+	           
+	       }
+		
+	}
 
      
    }
 
-}
+

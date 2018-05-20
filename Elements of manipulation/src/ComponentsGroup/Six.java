@@ -1,6 +1,7 @@
 package ComponentsGroup;
 
-import java.util.logging.Level;import ComponentsGroup.Six.MyDataType;
+import java.util.logging.Level;
+import ComponentsGroup.Six.MyDataType;
 import java.util.Timer;
 import java.util.TimerTask;
 import ComponentsGroup.TableViewSample.Person;
