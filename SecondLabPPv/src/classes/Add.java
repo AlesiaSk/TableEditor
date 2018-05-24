@@ -1,8 +1,17 @@
 package classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import classes.MainClass.Address;
+import classes.MainClass.Job;
+import classes.MainClass.Person;
+import classes.MainClass.TableInfo;
+import classes.MainClass.WorkExperience;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
@@ -15,19 +24,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
-public class Add  implements EventHandler<ActionEvent>{
-	Button button;
-	public void display() {
-		StackPane layout;
-		TextField addStudent;
-		TextField addParent;
-		TextField addAddress;
-		TextField addJob;
-		TextField addExp;
+public class Add  {
+	static Button button;
+	static StackPane layout;
+	static TextField addStudent;
+	static TextField addParent;
+	static TextField addAddress;
+	static TextField addJob;
+	static TextField addExp;
+	public static void display() {
+		
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		button = new Button("Добавить");
-		button.setOnAction(this);
+		button.setOnAction(e -> Add.addInfo());
 		addStudent = new TextField();
 		addStudent.setPromptText("Введите ФИО студента");
 		addParent = new TextField();
@@ -57,7 +67,17 @@ public class Add  implements EventHandler<ActionEvent>{
 		window.showAndWait();
 	
 }
-	public void handle(ActionEvent event) {
-		
+	public static void addInfo() {
+		ArrayList<String[]> list = new ArrayList<String[]>();
+   		Person A = new Person(addStudent.getText(), addParent.getText());
+   		Address adr = new Address(addAddress.getText());
+   		Job job = new Job(addJob.getText());
+   		WorkExperience exp = new WorkExperience(Integer.parseInt(addExp.getText()));
+   		MainClass.data.add(new TableInfo(A.first, A.second, adr.third , job.fourth, exp.fifth));
+   		addStudent.clear();
+   		addParent.clear();
+   		addAddress.clear();
+   		addJob.clear();
+   		addExp.clear();
 	}
 }

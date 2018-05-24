@@ -37,10 +37,10 @@ import javafx.scene.control.MenuBar;
 public class MainClass extends Application implements EventHandler<ActionEvent>{
 	 
     TableView<TableInfo> table = new TableView<>();
-    ObservableList<TableInfo> data =
+    static ObservableList<TableInfo> data =
            FXCollections.observableArrayList();
     HBox hb = new HBox();
-    ArrayList<String[]> list;
+    static ArrayList<String[]> list;
     Button addButton2 = new Button("Найти");
     Button addButton = new Button("Добавить");
     Button addButton3 = new Button("Удалить");
@@ -53,7 +53,6 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
     Label label4;
     Label label5;
     TextField addStudent = new TextField();
-    private static final String FILENAME = "File.xml";
     TableColumn studentFIO = new TableColumn("ФИО студента");
    public static void main(String[] args) {
        launch(args);
@@ -107,9 +106,11 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        addStudent.setPromptText("Input text");
        addStudent.setMaxWidth(studentFIO.getPrefWidth());
        
-       addButton.setOnAction(this);
-       addButton2.setOnAction(this);
+       addButton.setOnAction(e -> Add.display());
+       Add add = new Add();
+       addButton2.setOnAction(e -> Search.display());
        addButton3.setOnAction(this);
+       addButton4.setOnAction(e -> Add.display());
        hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, addButton4, menuBar);
        hb.setSpacing(3);
 
@@ -124,18 +125,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        stage.show();
    }
    public void handle(ActionEvent event) {
-   	if (event.getSource() == addButton) {
-   		
-   		String s =  addStudent.getText();
-   		String[] parts = s.split(" ");
-   		list.add(parts);
-   		Person A = new Person(parts[0], parts[1]);
-   		Address adr = new Address(parts[2]);
-   		Job job = new Job(parts[3]);
-   		WorkExperience exp = new WorkExperience(Integer.parseInt(parts[4]));
-   		data.add(new TableInfo(A.first, A.second, adr.third , job.fourth, exp.fifth));
-   		addStudent.clear();
-   	}
+   	
    	if (event.getSource() == addButton2) {
 	   		for (int i = 0; i < list.size(); i++) {
 	   			String[] word = list.get(i);
@@ -154,13 +144,11 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
    		
    		addStudent.clear();
    	}
-	if (event.getSource() == addButton4) {
-   		
-	}
+	
    
 		
    }
-   public  class TableInfo {
+   public static class TableInfo {
 	
 	private final SimpleStringProperty first;
 	private final SimpleStringProperty second;
@@ -168,7 +156,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
 	private final SimpleStringProperty fourth;
 	private final SimpleIntegerProperty fifth;
 	
-	 private TableInfo(String fName, String sName, String tName, String foName, Integer fifName) {
+	 TableInfo(String fName, String sName, String tName, String foName, Integer fifName) {
          this.first = new SimpleStringProperty(fName);
          this.second = new SimpleStringProperty(sName);
          this.third = new SimpleStringProperty(tName);
@@ -224,7 +212,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        public String first;
        public String second;
        
-       private Person(String fName, String sName) {
+       Person(String fName, String sName) {
            this.first = new String(fName);
            this.second = new String(sName);
            
@@ -232,27 +220,27 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        
       
        }
-   public class Address {
+   public static class Address {
 		public String third;
 		
-		 private Address(String tName) {
+		 Address(String tName) {
 	           this.third = new String(tName);
 	           
 	       }
 		
 	}
-   public class Job {
+   public static class Job {
 		public  String fourth;
-		private Job(String foName) {
+		Job(String foName) {
 	           this.fourth = new String(foName);
 	           
 	       }
 		
 	}
-   public class WorkExperience {
+   public static class WorkExperience {
 
 		public Integer fifth;
-		private WorkExperience(Integer fifName) {
+		WorkExperience(Integer fifName) {
 	           this.fifth = new Integer(fifName);
 	           
 	       }
