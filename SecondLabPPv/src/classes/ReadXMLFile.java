@@ -1,6 +1,8 @@
 package classes;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -10,9 +12,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import classes.MainClass.TableInfo;
+
 
 public class ReadXMLFile {
-	
+	 static List<String> lFirst = new Vector<String>();
+	 static List<String> lSecond = new Vector<String>();
+	 static List<String> lThird = new Vector<String>();
+	 static List<String> lFourth = new Vector<String>();
+	 static List<String> lFifth= new Vector<String>();
 	public static void main(String[] args) {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser = null;
@@ -54,30 +62,30 @@ public class ReadXMLFile {
 			}
 				public void characters(char ch[], int start, int length) throws SAXException{
 					if(bfirst) {
-						System.out.println(new String(ch, start, length));
+						lFirst.add(new String(ch, start, length));
 						bfirst = false;
 					}
 					if(bsecond) {
-						System.out.println(new String(ch, start, length));
+						lSecond.add(new String(ch, start, length));
 						bsecond = false;
 					}
 					if(bthird) {
-						System.out.println(new String(ch, start, length));
+						lThird.add(new String(ch, start, length));
 						bthird = false;
 					}
 					if(bfourth) {
-						System.out.println(new String(ch, start, length));
+						lFourth.add(new String(ch, start, length));
 						bfourth = false;
 					}
 					if(bfifth) {
-						System.out.println(new String(ch, start, length)); 
+						lFifth.add(new String(ch, start, length));
 						bfifth = false;
 					}
 					
 				}
 		};
 		try {
-			saxParser.parse("File.xml", handler);
+			saxParser.parse(MainClass.addStudent.getText(), handler);
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +93,12 @@ public class ReadXMLFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		for (int i = 0; i < lFirst.size(); i++) {
+			MainClass.data.add(new TableInfo(lFirst.get(i), lSecond.get(i), lThird.get(i), lFourth.get(i), Integer.parseInt(lFifth.get(i))));
+		}
+		
 	}
 
 }

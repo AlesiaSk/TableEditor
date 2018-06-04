@@ -58,7 +58,7 @@ public class MainClass extends Application{
 	static int del3;
 	static int del4;
     Label label5;
-    TextField addStudent = new TextField();
+    static TextField addStudent = new TextField();
     TableColumn studentFIO = new TableColumn("ФИО студента");
    public static void main(String[] args) {
        launch(args);
