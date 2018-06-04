@@ -1,27 +1,24 @@
 package classes;
 
-
-import javafx.scene.control.Button;
-import classes.MainClass.TableInfo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Search {
+public class Delete {
 	static StackPane layout;
 	static RadioButton radioButton1;
 	static RadioButton radioButton2;
 	static RadioButton radioButton3;
 	static RadioButton radioButton4;
 	static Button button;
+	
 	 
 	public static void display() {
 	Stage window = new Stage();
@@ -29,7 +26,7 @@ public class Search {
 	final ToggleGroup group = new ToggleGroup();
 	layout = new StackPane();
 	button = new Button("Выбрать");
-	button.setOnAction(e -> Search.kindOfSearch());
+	button.setOnAction(e -> Delete.kindOfDelete());
 	radioButton1 = new RadioButton("по ФИО студента");
 	radioButton1.setToggleGroup(group);
 	radioButton2 = new RadioButton("по ФИО родителя или месту работы");
@@ -52,18 +49,18 @@ public class Search {
 	window.showAndWait();
 	}
 	
-	public static void kindOfSearch() {
+	public static void kindOfDelete() {
 		if (radioButton1.isSelected()) {
-			SearchByStudent.display();
+			DeleteByStudent.display();
 		}
 		else if (radioButton2.isSelected()) {
-			SearchByParentAndWork.display();
+			DeleteByParentAndWork.display();
 		}
 		else if (radioButton3.isSelected()) {
-			SearchByExpOrJob.display();
+			DeleteByExpOrJob.display();
 		}
 		else if (radioButton4.isSelected()) {
-			SearchByStudentOrJob.display();
+			DeleteByStudentOrJob.display();
 		}
 	}
 }

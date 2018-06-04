@@ -1,22 +1,22 @@
 package classes;
 
-
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import classes.MainClass.TableInfo;
-import javafx.collections.transformation.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class SearchByStudent {
+public class SearchByStudentOrJob {
 	static StackPane layout;
 	static Button button;
 	static TextField text;
@@ -30,7 +30,7 @@ public class SearchByStudent {
 		button = new Button("Найти");
 		button.setOnAction(e -> Search.kindOfSearch());
 		text = new TextField();
-		text.setPromptText("Введите ФИО студента");
+		text.setPromptText("Введите ФИО студента или место работы родителя");
 		TableColumn studentFIO = new TableColumn("ФИО студента");
 		studentFIO.setMinWidth(150);
 	    studentFIO.setCellValueFactory(
@@ -68,15 +68,16 @@ public class SearchByStudent {
 
                 if (tableInfo.getFirst().toLowerCase().contains(lowerCaseFilter)) {
                     return true; 
-                } 
+                } else if (tableInfo.getThird().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; 
+                }
                 return false; 
             });
         });
 	    SortedList<TableInfo> sortedData = new SortedList<>(filData);
 
-        
         sortedData.comparatorProperty().bind(table.comparatorProperty());
-        
+
         table.setItems(sortedData);
             
 	    table.getColumns().addAll(studentFIO, parentFIO, address, parentWork, workExperience);

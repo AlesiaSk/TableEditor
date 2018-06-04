@@ -34,9 +34,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
 import javafx.scene.control.MenuBar;
 
-public class MainClass extends Application implements EventHandler<ActionEvent>{
+public class MainClass extends Application{
 	 
-    TableView<TableInfo> table = new TableView<>();
+    static TableView<TableInfo> table = new TableView<>();
     static ObservableList<TableInfo> data =
            FXCollections.observableArrayList();
     HBox hb = new HBox();
@@ -51,6 +51,12 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
     Label label2;
     Label label3;
     Label label4;
+    static Label label;
+	static int allDeleted;
+	static int del1;
+	static int del2;
+	static int del3;
+	static int del4;
     Label label5;
     TextField addStudent = new TextField();
     TableColumn studentFIO = new TableColumn("ФИО студента");
@@ -70,7 +76,34 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        menuBar = new MenuBar();
        list = new ArrayList<String[]>();
        menuBar.getMenus().addAll(menu, menu1, menu2);
+       
+       MenuItem addItm = new MenuItem("добавить данные");
+       menu.getItems().add(addItm);
+       addItm.setOnAction(e -> Add.display());
+       MenuItem searchByStudItm = new MenuItem("поиск по ФИО студента");
+       searchByStudItm.setOnAction(e -> SearchByStudent.display());
+       MenuItem searchByExpItm = new MenuItem("поиск по cтажу или месту работы");
+       searchByExpItm.setOnAction(e -> SearchByExpOrJob.display());
+       MenuItem searchByParentItm = new MenuItem("поиск по ФИО родителя или метсу работы");
+       searchByParentItm.setOnAction(e -> SearchByParentAndWork.display());
+       MenuItem searchByJobItm = new MenuItem("поиск по ФИО студента или месту работы");
+       searchByJobItm.setOnAction(e -> SearchByStudentOrJob.display());
+       menu1.getItems().addAll(searchByStudItm, searchByExpItm, searchByParentItm, searchByJobItm);
+       
+       MenuItem deleteByStudItm = new MenuItem("удаление по ФИО студента");
+       deleteByStudItm.setOnAction(e -> DeleteByStudent.display());
+       MenuItem deleteByExpItm = new MenuItem("удаление по cтажу или месту работы");
+       deleteByExpItm.setOnAction(e -> DeleteByExpOrJob.display());
+       MenuItem deleteByParentItm = new MenuItem("удаление по ФИО родителя или метсу работы");
+       deleteByParentItm.setOnAction(e -> DeleteByParentAndWork.display());
+       MenuItem deleteByJobItm = new MenuItem("удаление по ФИО студента или месту работы");
+       deleteByJobItm.setOnAction(e -> DeleteByStudentOrJob.display());
+       menu2.getItems().addAll(deleteByStudItm, deleteByExpItm, deleteByParentItm, deleteByJobItm);
+       
+       allDeleted = del1 = del2 = del3  = del4 = 0;
+       allDeleted = del1 + del2 + del3  + del4;
        label1 = new Label();
+       label = new Label("Всего удалено - " + allDeleted + ", удалено по ФИО студента - " + del1 + ", удалено по ФИО родителя или месту его работы - " + del2);
        label2 = new Label();
        label3 = new Label();
        label4 = new Label();
@@ -109,8 +142,8 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        addButton.setOnAction(e -> Add.display());
        Add add = new Add();
        addButton2.setOnAction(e -> Search.display());
-       addButton3.setOnAction(this);
-       addButton4.setOnAction(e -> Add.display());
+       addButton3.setOnAction(e -> Delete.display());
+       addButton4.setOnAction(e -> ReadXMLFile.main(null));
        hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, addButton4, menuBar);
        hb.setSpacing(3);
 
@@ -124,30 +157,7 @@ public class MainClass extends Application implements EventHandler<ActionEvent>{
        stage.setScene(scene);
        stage.show();
    }
-   public void handle(ActionEvent event) {
-   	
-   	if (event.getSource() == addButton2) {
-	   		for (int i = 0; i < list.size(); i++) {
-	   			String[] word = list.get(i);
-	   			for (int k = 0; k < word.length; k++) {
-		   			if (word[k].equals(addStudent.getText())) {
-		   				label1.setText(table.getItems().get(i).getFirst() + " " + table.getItems().get(i).getSecond() + " " + table.getItems().get(i).getThird() + " " + table.getItems().get(i).getFourth() + " " + table.getItems().get(i).getFifth());
-		   				Alert alert = new Alert(AlertType.INFORMATION);
-		   				alert.setTitle("Информация");
-		   				alert.setHeaderText("Было найдено");
-		   				alert.setContentText(label1.getText());
-		   				alert.showAndWait();
-		   			}
-	   			}
-	   		}
-   		
-   		
-   		addStudent.clear();
-   	}
-	
-   
-		
-   }
+ 
    public static class TableInfo {
 	
 	private final SimpleStringProperty first;
