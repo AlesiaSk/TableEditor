@@ -85,7 +85,7 @@ public class ReadXMLFile {
 				}
 		};
 		try {
-			saxParser.parse(MainClass.addStudent.getText(), handler);
+			saxParser.parse(MainClass.addStudent.getText() + ".xml", handler);
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -45,6 +45,7 @@ public class MainClass extends Application{
     Button addButton = new Button("Добавить");
     Button addButton3 = new Button("Удалить");
     Button addButton4 = new Button("Загрузить");
+    Button addButton5 = new Button("Сохранить");
     VBox vbox;
     MenuBar menuBar;
     Label label1;
@@ -144,7 +145,8 @@ public class MainClass extends Application{
        addButton2.setOnAction(e -> Search.display());
        addButton3.setOnAction(e -> Delete.display());
        addButton4.setOnAction(e -> ReadXMLFile.main(null));
-       hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, addButton4, menuBar);
+       addButton5.setOnAction(e -> Save.main(null));
+       hb.getChildren().addAll(addStudent,addButton, addButton2, addButton3, addButton4, addButton5, menuBar);
        hb.setSpacing(3);
 
        vbox = new VBox();

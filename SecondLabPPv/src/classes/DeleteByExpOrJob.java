@@ -103,15 +103,21 @@ public class DeleteByExpOrJob {
 	}
 
 	public static void delExpOrJob() {
+		table.setItems(MainClass.data);
 		for (int i = 0; i < sortedData.size(); i++) {
 			for (int k = 0; k < MainClass.data.size(); k++) {
 				if(MainClass.data.get(k).equals(sortedData.get(i))) {
 					MainClass.data.remove(k);
+					if (k == 0) {
+						k = -1;
+					}
+					else {
 					k--;
+					}
 				}
 			}
 		}
-		table.setItems(MainClass.data);
+	
 	}
 }
 
