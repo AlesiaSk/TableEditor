@@ -35,14 +35,16 @@ public class MainWindow extends Application{
 	    Table table1;
 	    Table table2;
 	    public static List<Table> listOfPages;
-	    HBox hb = new HBox(10);
-	    HBox hb2 = new HBox(10);
-	    VBox vbox;
+	    public static HBox hb = new HBox(10);
+	    public static HBox hb2 = new HBox(10);
+	    public static HBox hb3;
+	    public static VBox vbox;
 	    MenuBar menuBar;
 	    public static TextField addStudent;
 	    public static TextField  numOfRec;
-	    static Label label;
+	    public static Label label;
 	    public static int numOfPage = 0;
+	    public static int numOfDel = 0;
 	    Label lNumPage;
 	    public void main(String[] args) {
 	        launch(args);
@@ -89,7 +91,8 @@ public class MainWindow extends Application{
 	       
 	       addStudent.setPromptText("Input text");
 	       
-	       
+	       label = new Label();
+	       label.setText("Всего удалено: " + String.valueOf(numOfDel));
 	       
 	       addButton.setOnAction(e -> AddWindow.display());
 	       addButton2.setOnAction(e -> SearchWindow.display(true));
@@ -98,7 +101,7 @@ public class MainWindow extends Application{
 	       addButton5.setOnAction(e -> Save.main(null));
 	       
 	       lNumPage = new Label();
-	       lNumPage.setText("Номер страницы  - 1");
+	       lNumPage.setText("Номер страницы  - 1 / 3");
 	       
 	       Button button1 = new Button("1");
 	       Button button2 = new Button ("<-");
@@ -123,7 +126,7 @@ public class MainWindow extends Application{
 	       hb.setSpacing(3);
 	       
 	       Label records = new Label();
-	       records.setText("Количество записей "); 
+	       records.setText("Количество строк "); 
 	       ToolBar toolBar = new ToolBar(but, but1, but2, but3, but4);
 	       
 	       but.setOnAction(e -> AddWindow.display());
@@ -134,17 +137,18 @@ public class MainWindow extends Application{
 	       
 	       hb2.getChildren().addAll(lNumPage, records, numOfRec, toolBar);
 	       
-	      
+	      hb3 = new HBox();
+	      hb3.getChildren().add(label);
 	       vbox = new VBox();
 	       vbox.setSpacing(5);
 	       vbox.setPadding(new Insets(10, 0, 0, 10));
-	       vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2);
+	       vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2, hb3);
 	       
 	      
-	       button1.setOnAction(e -> {numOfPage = 1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2); lNumPage.setText("Номер страницы  - 1");});
-	       button2.setOnAction(e -> {numOfPage -=1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2); lNumPage.setText("Номер страницы  - " + String.valueOf(numOfPage));});
-	       button3.setOnAction(e -> {numOfPage +=1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2); lNumPage.setText("Номер страницы  - " + String.valueOf(numOfPage));});
-	       button4.setOnAction(e -> {numOfPage = 3; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2); lNumPage.setText("3");});
+	       button1.setOnAction(e -> {numOfPage = 1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2, hb3); lNumPage.setText("Номер страницы  - 1 / 3");});
+	       button2.setOnAction(e -> {numOfPage -=1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2, hb3); lNumPage.setText("Номер страницы  - " + String.valueOf(numOfPage) + " /3");});
+	       button3.setOnAction(e -> {numOfPage +=1; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2, hb3); lNumPage.setText("Номер страницы  - " + String.valueOf(numOfPage) + " /3");});
+	       button4.setOnAction(e -> {numOfPage = 3; vbox.getChildren().clear(); vbox.getChildren().addAll(listOfPages.get(numOfPage).vbox, hb, hb2, hb3); lNumPage.setText("3 / 3");});
 	       button5.setOnAction(e -> numOfRec.getText());
 	       
 	       ((Group) scene.getRoot()).getChildren().addAll(vbox);

@@ -28,6 +28,8 @@ public class Delete {
 			}
 		}
 	}
-	return MainWindow.listOfPages.get(MainWindow.numOfPage).data;
+	 MainWindow.numOfDel += sortSize;
+	 MainWindow.label.setText("Было удалено: " + MainWindow.numOfDel);
+	 return MainWindow.listOfPages.get(MainWindow.numOfPage).data;
 	}
 }
