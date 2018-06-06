@@ -4,6 +4,8 @@ import View.MainWindow;
 import View.SearchWindow;
 import View.Table;
 import Model.Data.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableView;
@@ -11,47 +13,50 @@ import javafx.scene.control.TableView;
 
 public class Search {
 	
-	public static SortedList<TableInfo> tableSearch(TableView table, String type) {
-	    FilteredList<TableInfo> filData = new FilteredList<>(MainWindow.listOfPages.get(MainWindow.numOfPage).data, p -> true);
-	    SearchWindow.text.textProperty().addListener((observable, oldValue, newValue) -> {
-            filData.setPredicate(tableInfo -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
+	public static ObservableList<TableInfo> tableSearch(TableView table, String type) {
+		
+			   ObservableList<TableInfo>  sortedData = FXCollections.observableArrayList();
+	    	   int size = MainWindow.listOfPages.get(MainWindow.numOfPage).data.size();
+               String t = SearchWindow.text.getText();
+               for (int ind = 0; ind < size; ind++) {
                 if (type.equals("second")) {
-                if (tableInfo.getSecond().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; 
-                } else if (tableInfo.getThird().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; 
+                if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getSecond().contains(t)) {
+                    sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind)); 
+                } else if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getThird().contains(t)) {
+                	sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind));
                 }
                 }
-                else if (type.equals("third")) {
-                    if (tableInfo.getFifth().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; 
-                    } else if (tableInfo.getThird().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; 
-                    }
-                }   
-                else if (type.equals("fourth")) {
-                    if (tableInfo.getFifth().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; 
-                    } else if (tableInfo.getFirst().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; 
-                    }
-                }
-                else if (type.equals("first")) {
-                     if (tableInfo.getFirst().toLowerCase().contains(lowerCaseFilter)) {
-                        return true; 
-                    }
-                }
-                    return false; 
-                    
-            });
-        });
-	    SortedList<TableInfo> sortedData = new SortedList<>(filData);
-        sortedData.comparatorProperty().bind(table.comparatorProperty());
+               }
+               
+               for (int ind = 0; ind < size; ind++) {
+                   if (type.equals("third")) {
+                   if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getFifth().contains(t)) {
+                       sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind)); 
+                   } else if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getThird().contains(t)) {
+                   	sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind));
+                   }
+                   }
+                  }
+                
+               for (int ind = 0; ind < size; ind++) {
+                   if (type.equals("fourth")) {
+                   if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getFifth().contains(t)) {
+                       sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind)); 
+                   } else if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getFirst().contains(t)) {
+                   	sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind));
+                   }
+                   }
+                  }
+                
+               for (int ind = 0; ind < size; ind++) {
+                   if (type.equals("first")) {
+                   if (MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind).getFirst().contains(t)) {
+                       sortedData.add(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(ind)); 
+                   } 
+                   }
+                  }
+	
+	    
         System.out.println(sortedData.size());
         return (sortedData);
 	}

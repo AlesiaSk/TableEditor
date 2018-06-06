@@ -73,7 +73,7 @@ public class SearchWindow {
     vbox.getChildren().addAll(table1.vbox, layout);
 	}
 	else if ( b == false) {
-	vbox.getChildren().addAll(MainWindow.listOfPages.get(MainWindow.numOfPage).table, layout);
+	vbox.getChildren().addAll(table1.vbox, layout);
 	}
     
     ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -83,16 +83,16 @@ public class SearchWindow {
 	
 	public static void kindOfSearch() {
 		if (radioButton1.isSelected()) {
-			table1.table.setItems(Search.tableSearch(table1.table, "first"));
+			button1.setOnAction(e -> table1.table.setItems(Search.tableSearch(table1.table, "first")));
 		}
 		else if (radioButton2.isSelected()) {
-			table1.table.setItems(Search.tableSearch(table1.table, "second"));
+			button1.setOnAction(e -> table1.table.setItems(Search.tableSearch(table1.table, "second")));
 		}
 		else if (radioButton3.isSelected()) {
-			table1.table.setItems(Search.tableSearch(table1.table, "third"));
+			button1.setOnAction(e -> table1.table.setItems(Search.tableSearch(table1.table, "third")));
 		}
 		else if (radioButton4.isSelected()) {
-			table1.table.setItems(Search.tableSearch(table1.table, "fourth"));
+			button1.setOnAction(e -> table1.table.setItems(Search.tableSearch(table1.table, "fourth")));
 		}
 	}
 	
