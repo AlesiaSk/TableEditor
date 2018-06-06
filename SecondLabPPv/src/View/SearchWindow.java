@@ -1,7 +1,6 @@
 package View;
 
-import Model.Data;
-import Model.Delete;
+import Controller.Delete;
 import Model.Search;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,22 +18,22 @@ import javafx.scene.control.TableView;
 
 public class SearchWindow {
 
-	static StackPane layout;
-	static RadioButton radioButton1;
-	static RadioButton radioButton2;
-	static RadioButton radioButton3;
-	static RadioButton radioButton4;
-	static Button button;
-	static Button button1;
+	
+	public static RadioButton radioButton1;
+	public static RadioButton radioButton2;
+	public static RadioButton radioButton3;
+	public static RadioButton radioButton4;
+	public static Button button;
+	public static Button button1;
 	public static TextField text;
-	static TableView table1;
+	public static Table table1 = new Table();
 	 
 	public static void display(Boolean b) {
 	Stage window = new Stage();
 	Scene scene = new Scene(new Group());
 	window.initModality(Modality.APPLICATION_MODAL);
 	final ToggleGroup group = new ToggleGroup();
-	layout = new StackPane();
+	StackPane layout = new StackPane();
 	VBox vbox = new VBox();
 	button = new Button("Выбрать");
 	button1 = new Button("Ввести");
@@ -42,7 +41,7 @@ public class SearchWindow {
 	if (b == true) {
 		button.setOnAction(e -> SearchWindow.kindOfSearch());
 	}
-	else {
+	else if (b == false){
 		button.setOnAction(e -> SearchWindow.kindOfDelete());
 	}
 	
@@ -55,7 +54,7 @@ public class SearchWindow {
 	radioButton4 = new RadioButton("по ФИО студента или месту работы родителя");
 	radioButton4.setToggleGroup(group);
 	
-	table1 = MainWindow.createTable(Data.data);
+	table1.table.setItems(MainWindow.listOfPages.get(MainWindow.numOfPage).data);
 	layout.setMargin(radioButton1, new Insets(10,10,50,10));
 	layout.setAlignment(radioButton1, Pos.TOP_LEFT);
 	layout.setMargin(radioButton2, new Insets(30,10,50,10));
@@ -70,7 +69,12 @@ public class SearchWindow {
 	layout.setMargin(text, new Insets(10,10,10,10));
 	layout.getChildren().addAll(radioButton1, radioButton2, radioButton3, radioButton4, button, text, button1);
 	vbox.setPadding(new Insets(10, 0, 0, 10));
-    vbox.getChildren().addAll(table1, layout);
+	if (b == true) {
+    vbox.getChildren().addAll(table1.vbox, layout);
+	}
+	else if ( b == false) {
+	vbox.getChildren().addAll(MainWindow.listOfPages.get(MainWindow.numOfPage).table, layout);
+	}
     
     ((Group) scene.getRoot()).getChildren().addAll(vbox);
 	window.setScene(scene);
@@ -79,31 +83,31 @@ public class SearchWindow {
 	
 	public static void kindOfSearch() {
 		if (radioButton1.isSelected()) {
-			table1.setItems(Search.tableSearch(table1, "first"));
+			table1.table.setItems(Search.tableSearch(table1.table, "first"));
 		}
 		else if (radioButton2.isSelected()) {
-			table1.setItems(Search.tableSearch(table1, "second"));
+			table1.table.setItems(Search.tableSearch(table1.table, "second"));
 		}
 		else if (radioButton3.isSelected()) {
-			table1.setItems(Search.tableSearch(table1, "third"));
+			table1.table.setItems(Search.tableSearch(table1.table, "third"));
 		}
 		else if (radioButton4.isSelected()) {
-			table1.setItems(Search.tableSearch(table1, "fourth"));
+			table1.table.setItems(Search.tableSearch(table1.table, "fourth"));
 		}
 	}
 	
 	public static void kindOfDelete() {
 		if (radioButton1.isSelected()) {
-			button1.setOnAction(e -> Delete.deleteFromTable("first", Controller.Controller.table));
+			button1.setOnAction(e -> MainWindow.listOfPages.get(MainWindow.numOfPage).table.setItems(Delete.deleteFromTable("first", MainWindow.listOfPages.get(MainWindow.numOfPage).table)));
 		}
 		else if (radioButton2.isSelected()) {
-			button1.setOnAction(e -> Delete.deleteFromTable("second", Controller.Controller.table));
+			button1.setOnAction(e -> MainWindow.listOfPages.get(MainWindow.numOfPage).table.setItems(Delete.deleteFromTable("second", MainWindow.listOfPages.get(MainWindow.numOfPage).table)));
 		}
 		else if (radioButton3.isSelected()) {
-			button1.setOnAction(e -> table1.setItems(Delete.deleteFromTable("third", Controller.Controller.table)));
+			button1.setOnAction(e -> MainWindow.listOfPages.get(MainWindow.numOfPage).table.setItems(Delete.deleteFromTable("third", MainWindow.listOfPages.get(MainWindow.numOfPage).table)));
 		}
 		else if (radioButton4.isSelected()) {
-			button1.setOnAction(e -> Delete.deleteFromTable("fourth", Controller.Controller.table));
+			button1.setOnAction(e -> MainWindow.listOfPages.get(MainWindow.numOfPage).table.setItems(Delete.deleteFromTable("fourth", MainWindow.listOfPages.get(MainWindow.numOfPage).table)));
 		}
 	}
 }

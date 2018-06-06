@@ -7,8 +7,7 @@ import javafx.collections.ObservableList;
 
 public class Data {
 
-	public static ObservableList<TableInfo> data =
-	           FXCollections.observableArrayList();
+	
 	public static class TableInfo {
 		
 		private final SimpleStringProperty first;

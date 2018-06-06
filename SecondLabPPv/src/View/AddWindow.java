@@ -12,19 +12,19 @@ import javafx.stage.Stage;
 
 public class AddWindow {
 	
-	static Button button;
-	static StackPane layout;
 	public static TextField addStudent;
 	public static TextField addParent;
 	public static TextField addAddress;
 	public static TextField addJob;
 	public static TextField addExp;
 	
+	
+	
 	public static void display() {
 		
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		button = new Button("Добавить");
+		Button button = new Button("Добавить");
 		button.setOnAction(e -> Add.addInfo());
 		addStudent = new TextField();
 		addStudent.setPromptText("Введите ФИО студента");
@@ -36,7 +36,7 @@ public class AddWindow {
 		addJob.setPromptText("Введите должность родителя");
 		addExp = new TextField();
 		addExp.setPromptText("Введите стаж работы родителя");
-		layout = new StackPane();
+		StackPane layout = new StackPane();
 		layout.setMargin(addStudent, new Insets(10,10,50,10));
 		layout.setAlignment(addStudent, Pos.TOP_LEFT);
 		layout.setMargin(addParent, new Insets(50,10,50,10));

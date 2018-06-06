@@ -2,6 +2,7 @@ package Model;
 
 import View.MainWindow;
 import View.SearchWindow;
+import View.Table;
 import Model.Data.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -11,7 +12,7 @@ import javafx.scene.control.TableView;
 public class Search {
 	
 	public static SortedList<TableInfo> tableSearch(TableView table, String type) {
-	    FilteredList<TableInfo> filData = new FilteredList<>(Data.data, p -> true);
+	    FilteredList<TableInfo> filData = new FilteredList<>(MainWindow.listOfPages.get(MainWindow.numOfPage).data, p -> true);
 	    SearchWindow.text.textProperty().addListener((observable, oldValue, newValue) -> {
             filData.setPredicate(tableInfo -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -50,9 +51,8 @@ public class Search {
             });
         });
 	    SortedList<TableInfo> sortedData = new SortedList<>(filData);
-
         sortedData.comparatorProperty().bind(table.comparatorProperty());
-
+        System.out.println(sortedData.size());
         return (sortedData);
 	}
 	

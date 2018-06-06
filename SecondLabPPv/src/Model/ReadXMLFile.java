@@ -95,11 +95,18 @@ public class ReadXMLFile {
 			e.printStackTrace();
 		}
 		
-		
-		for (int i = 0; i < lFirst.size(); i++) {
-			Data.data.add(new TableInfo(lFirst.get(i), lSecond.get(i), lThird.get(i), lFourth.get(i), lFifth.get(i)));
+		int m = Integer.parseInt(MainWindow.numOfRec.getText());
+		int size = MainWindow.listOfPages.get(MainWindow.numOfPage).data.size();
+		if (size < m) {
+			for (int i = 0; i < m - size; i++) {
+				MainWindow.listOfPages.get(MainWindow.numOfPage).data.add(new TableInfo(lFirst.get(i), lSecond.get(i), lThird.get(i), lFourth.get(i), lFifth.get(i)));
+			}
 		}
-		
+		else if (size > m) {
+			for (int i = (size - 1); i >= m; i--) {
+				MainWindow.listOfPages.get(MainWindow.numOfPage).data.remove(i);
+			}
+		}
 	}
 
 }

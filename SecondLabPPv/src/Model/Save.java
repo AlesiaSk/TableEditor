@@ -30,34 +30,34 @@ public class Save {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("tableInfos");
 			doc.appendChild(rootElement);
-			for (int i = 0; i < Data.data.size(); i ++) {
+			for (int i = 0; i < MainWindow.listOfPages.get(MainWindow.numOfPage).data.size(); i ++) {
 			
 			Element staff = doc.createElement("tableInfo");
 			rootElement.appendChild(staff);
 
 			
 			Element first = doc.createElement("first");
-			first.appendChild(doc.createTextNode(Data.data.get(i).getFirst()));
+			first.appendChild(doc.createTextNode(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(i).getFirst()));
 			staff.appendChild(first);
 
 			
 			Element firstname = doc.createElement("second");
-			firstname.appendChild(doc.createTextNode(Data.data.get(i).getSecond()));
+			firstname.appendChild(doc.createTextNode(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(i).getSecond()));
 			staff.appendChild(firstname);
 
 			
 			Element lastname = doc.createElement("third");
-			lastname.appendChild(doc.createTextNode(Data.data.get(i).getThird()));
+			lastname.appendChild(doc.createTextNode(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(i).getThird()));
 			staff.appendChild(lastname);
 
 			
 			Element nickname = doc.createElement("fourth");
-			nickname.appendChild(doc.createTextNode(Data.data.get(i).getFourth()));
+			nickname.appendChild(doc.createTextNode(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(i).getFourth()));
 			staff.appendChild(nickname);
 
 			
 			Element salary = doc.createElement("fifth");
-			salary.appendChild(doc.createTextNode(Data.data.get(i).getFifth().toString()));
+			salary.appendChild(doc.createTextNode(MainWindow.listOfPages.get(MainWindow.numOfPage).data.get(i).getFifth().toString()));
 			staff.appendChild(salary);
 
 			
