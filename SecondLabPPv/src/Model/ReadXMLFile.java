@@ -1,4 +1,4 @@
-package classes;
+package Model;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import classes.MainClass.TableInfo;
+import Model.Data.TableInfo;
+import View.MainWindow;
 
 
 public class ReadXMLFile {
@@ -85,7 +86,7 @@ public class ReadXMLFile {
 				}
 		};
 		try {
-			saxParser.parse(MainClass.addStudent.getText() + ".xml", handler);
+			saxParser.parse(MainWindow.addStudent.getText() + ".xml", handler);
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,7 +97,7 @@ public class ReadXMLFile {
 		
 		
 		for (int i = 0; i < lFirst.size(); i++) {
-			MainClass.data.add(new TableInfo(lFirst.get(i), lSecond.get(i), lThird.get(i), lFourth.get(i), Integer.parseInt(lFifth.get(i))));
+			Data.data.add(new TableInfo(lFirst.get(i), lSecond.get(i), lThird.get(i), lFourth.get(i), lFifth.get(i)));
 		}
 		
 	}

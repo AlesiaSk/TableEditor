@@ -1,4 +1,4 @@
-package classes;
+package Model;
 
 import java.io.File;
 
@@ -16,6 +16,8 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import View.MainWindow;
 public class Save {
 	public static void main(String argv[]) {
 
@@ -24,51 +26,47 @@ public class Save {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-			// root elements
+			
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("tableInfos");
 			doc.appendChild(rootElement);
-			for (int i = 0; i < MainClass.data.size(); i ++) {
-			// staff elements
+			for (int i = 0; i < Data.data.size(); i ++) {
+			
 			Element staff = doc.createElement("tableInfo");
 			rootElement.appendChild(staff);
 
-			// set attribute to staff element
+			
 			Element first = doc.createElement("first");
-			first.appendChild(doc.createTextNode(MainClass.data.get(i).getFirst()));
+			first.appendChild(doc.createTextNode(Data.data.get(i).getFirst()));
 			staff.appendChild(first);
 
-			// shorten way
-			// staff.setAttribute("id", "1");
-
-			// firstname elements
+			
 			Element firstname = doc.createElement("second");
-			firstname.appendChild(doc.createTextNode(MainClass.data.get(i).getSecond()));
+			firstname.appendChild(doc.createTextNode(Data.data.get(i).getSecond()));
 			staff.appendChild(firstname);
 
-			// lastname elements
+			
 			Element lastname = doc.createElement("third");
-			lastname.appendChild(doc.createTextNode(MainClass.data.get(i).getThird()));
+			lastname.appendChild(doc.createTextNode(Data.data.get(i).getThird()));
 			staff.appendChild(lastname);
 
-			// nickname elements
+			
 			Element nickname = doc.createElement("fourth");
-			nickname.appendChild(doc.createTextNode(MainClass.data.get(i).getFourth()));
+			nickname.appendChild(doc.createTextNode(Data.data.get(i).getFourth()));
 			staff.appendChild(nickname);
 
-			// salary elements
+			
 			Element salary = doc.createElement("fifth");
-			salary.appendChild(doc.createTextNode(MainClass.data.get(i).getFifth().toString()));
+			salary.appendChild(doc.createTextNode(Data.data.get(i).getFifth().toString()));
 			staff.appendChild(salary);
 
-			// write the content into xml file
+			
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("C:\\Users\\Алеся\\eclipse-workspace\\SecondLabPpv\\" + MainClass.addStudent));
+			StreamResult result = new StreamResult(new File("C:\\Users\\Алеся\\eclipse-workspace\\SecondLabPpv\\" + MainWindow.addStudent));
 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
+			
 
 			transformer.transform(source, result);
 
